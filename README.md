@@ -135,6 +135,9 @@ python main.py
 **VARIGONDA LAKSHMI SRINIVAS**  
 [GitHub → Srinivas-18](https://github.com/Srinivas-18)
 
+**PATTEL PRANAY REDDY**
+[GitHub → pranay-04](https://github.com/pranay-04)
+
 ---
 
 ## 📄 License
