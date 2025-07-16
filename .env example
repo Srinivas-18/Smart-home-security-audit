@@ -1,0 +1,26 @@
+# =======================
+# 📧 EMAIL ALERT SETTINGS
+# =======================
+EMAIL_ADDRESS=your_email@example.com
+EMAIL_PASSWORD=your_email_password_or_appkey
+TO_EMAIL=receiver@example.com
+
+# =========================
+# 📱 TWILIO SMS ALERTS
+# =========================
+TWILIO_ACCOUNT_SID=your_twilio_account_sid
+TWILIO_AUTH_TOKEN=your_twilio_auth_token
+TWILIO_PHONE_NUMBER=+1234567890
+USER_PHONE_NUMBER=+91xxxxxxxxxx
+
+# ============================
+# 📲 PUSHOVER NOTIFICATION KEYS
+# ============================
+PUSHOVER_USER_KEY=your_pushover_user_key
+PUSHOVER_API_KEY=your_pushover_api_key
+
+# ======================
+# 🔐 LOG VIEWER SECURITY
+# ======================
+LOG_USERNAME=admin
+LOG_PASSWORD=1234

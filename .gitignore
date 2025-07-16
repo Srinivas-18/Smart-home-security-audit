@@ -1,0 +1,29 @@
+# 🔐 Environment / Secrets
+.env
+
+# 💾 Compiled or OS files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# 💻 IDE / Editor configs
+.vscode/
+*.swp
+
+# 📦 Installer outputs
+dist/
+build/
+*.spec
+
+# 📸 Media / Generated files (optional)
+*.avi
+*.jpg
+*.png
+
+# 📝 Logs
+alert_log.csv
+
+# 🔎 Training Data
+persons/
+stolen/
