@@ -1,7 +1,7 @@
 # 🔐 Smart Surveillance System 2.0
 > Next-Gen Motion & Face Recognition with Real-Time Alerts, Logs & GUI
 
-![Banner](https://raw.githubusercontent.com/Srinivas-18/Smart-home-security-audit/main/screenshots/banner.png)
+![Banner](https://raw.githubusercontent.com/Srinivas-18/Smart-home-security-audit/main/github-header-image.png)
 
 <div align="center">
   <img src="https://img.shields.io/badge/python-3.10%2B-blue.svg" />
