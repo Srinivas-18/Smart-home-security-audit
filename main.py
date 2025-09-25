@@ -13,10 +13,32 @@ import platform
 import subprocess
 from tkinter import Toplevel, Label, Entry, Button, messagebox
 from dotenv import load_dotenv
+from log_viewer import open_log_viewer
+from logger import surveillance_logger
 
 load_dotenv()  # Load credentials from .env file
 
+# Log system startup
+surveillance_logger.log_system_event(
+    module="main.py",
+    action="system_startup",
+    status="info",
+    details="Smart Surveillance System started",
+    user="system"
+)
+
 def open_log():
+    """Open the new professional log viewer"""
+    surveillance_logger.log_system_event(
+        module="main.py",
+        action="log_viewer_opened",
+        status="info",
+        details="User opened log viewer",
+        user="user"
+    )
+    open_log_viewer()
+
+def open_legacy_log():
     def authenticate():
         entered_user = user_entry.get()
         entered_pass = pass_entry.get()
@@ -101,27 +123,52 @@ btn8_image = Image.open('icons/log.png').resize((40, 40)) if os.path.exists('ico
 if btn8_image: btn8_image = ImageTk.PhotoImage(btn8_image)
 
 btn_font = font.Font(size=18)
-btn1 = tk.Button(frame1, text='Monitor', height=60, width=140, fg='blue', command=find_motion, image=btn1_image, compound='left')
+# Wrapper functions to add logging
+def monitor_with_logging():
+    surveillance_logger.log_system_event("main.py", "monitor_started", "info", "User started motion monitoring", "user")
+    find_motion()
+
+def rectangle_with_logging():
+    surveillance_logger.log_system_event("main.py", "rectangle_monitor_started", "info", "User started rectangle motion detection", "user")
+    rect_noise()
+
+def noise_with_logging():
+    surveillance_logger.log_system_event("main.py", "noise_detection_started", "info", "User started noise detection", "user")
+    noise()
+
+def record_with_logging():
+    surveillance_logger.log_system_event("main.py", "recording_started", "info", "User started video recording", "user")
+    record()
+
+def in_out_with_logging():
+    surveillance_logger.log_system_event("main.py", "entry_exit_tracking_started", "info", "User started entry/exit tracking", "user")
+    in_out()
+
+def identify_with_logging():
+    surveillance_logger.log_system_event("main.py", "face_identification_started", "info", "User started face identification", "user")
+    maincall()
+
+btn1 = tk.Button(frame1, text='Monitor', height=60, width=140, fg='blue', command=monitor_with_logging, image=btn1_image, compound='left')
 btn1['font'] = btn_font
 btn1.grid(row=3, pady=(25,10))
 
-btn2 = tk.Button(frame1, text='Rectangle', height=60, width=140, fg='blue', command=rect_noise, image=btn2_image, compound='left')
+btn2 = tk.Button(frame1, text='Rectangle', height=60, width=140, fg='blue', command=rectangle_with_logging, image=btn2_image, compound='left')
 btn2['font'] = btn_font
 btn2.grid(row=3, pady=(20,10), column=3, padx=(20,5))
 
-btn3 = tk.Button(frame1, text='Noise', height=60, width=140, fg='blue', command=noise, image=btn3_image, compound='left')
+btn3 = tk.Button(frame1, text='Noise', height=60, width=140, fg='blue', command=noise_with_logging, image=btn3_image, compound='left')
 btn3['font'] = btn_font
 btn3.grid(row=5, pady=(25,10))
 
-btn4 = tk.Button(frame1, text='Record', height=60, width=140, fg='blue', command=record, image=btn4_image, compound='left')
+btn4 = tk.Button(frame1, text='Record', height=60, width=140, fg='blue', command=record_with_logging, image=btn4_image, compound='left')
 btn4['font'] = btn_font
 btn4.grid(row=5, pady=(20,10), column=3, padx=(20,10))
 
-btn6 = tk.Button(frame1, text='In Out', height=60, width=140, fg='blue', command=in_out, image=btn6_image, compound='left')
+btn6 = tk.Button(frame1, text='In Out', height=60, width=140, fg='blue', command=in_out_with_logging, image=btn6_image, compound='left')
 btn6['font'] = btn_font
 btn6.grid(row=5, pady=(20,10), column=2)
 
-btn7 = tk.Button(frame1, text='Identify', height=60, width=140, fg='blue', command=maincall, image=btn7_image, compound='left')
+btn7 = tk.Button(frame1, text='Identify', height=60, width=140, fg='blue', command=identify_with_logging, image=btn7_image, compound='left')
 btn7['font'] = btn_font
 btn7.grid(row=3, column=2, pady=(20,10))
 

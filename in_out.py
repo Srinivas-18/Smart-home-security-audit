@@ -1,5 +1,6 @@
 import cv2
 from datetime import datetime
+from logger import surveillance_logger
 def in_out():
     cap = cv2.VideoCapture(0)
 
@@ -42,18 +43,53 @@ def in_out():
                     print("to left")
                     x = 300
                     right, left = "", ""
-                    cv2.imwrite(f'visitors/in/{datetime.now().strftime("%d-%m-%y-%H-%M-%S")}.jpg', frame1)
+                    filename = f'visitors/in/{datetime.now().strftime("%d-%m-%y-%H-%M-%S")}.jpg'
+                    # Ensure directory exists
+                    import os
+                    os.makedirs('visitors/in', exist_ok=True)
+                    cv2.imwrite(filename, frame1)
+                    print(f"✅ Entry detected! Image saved: {filename}")
+                    
+                    # Log entry event
+                    surveillance_logger.log_entry_exit(
+                        direction="entry",
+                        image_path=filename,
+                        location="main_entrance",
+                        status="detected"
+                    )
             
         elif left:
                 if x > 500:
                     print("to right")
                     x = 300
                     right, left = "", ""
-                    cv2.imwrite(f'visitors/out/{datetime.now().strftime("%d-%m-%y-%H-%M-%S")}.jpg', frame1)
+                    filename = f'visitors/out/{datetime.now().strftime("%d-%m-%y-%H-%M-%S")}.jpg'
+                    # Ensure directory exists
+                    import os
+                    os.makedirs('visitors/out', exist_ok=True)
+                    cv2.imwrite(filename, frame1)
+                    print(f"🚪 Exit detected! Image saved: {filename}")
+                    
+                    # Log exit event
+                    surveillance_logger.log_entry_exit(
+                        direction="exit",
+                        image_path=filename,
+                        location="main_entrance",
+                        status="detected"
+                    )
             
             
         
-        cv2.imshow("", frame1)
+        # Draw red detection line for visual guidance
+        cv2.line(frame1, (200, 0), (200, frame1.shape[0]), (0, 0, 255), 3)  # Left boundary (red)
+        cv2.line(frame1, (500, 0), (500, frame1.shape[0]), (0, 0, 255), 3)  # Right boundary (red)
+        
+        # Add text labels for clarity
+        cv2.putText(frame1, "ENTRY ZONE", (50, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
+        cv2.putText(frame1, "EXIT ZONE", (520, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
+        cv2.putText(frame1, "Cross RED lines to trigger detection", (10, frame1.shape[0] - 20), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 2)
+        
+        cv2.imshow("Entry/Exit Detection - Press ESC to exit", frame1)
         
         k = cv2.waitKey(1)
         
